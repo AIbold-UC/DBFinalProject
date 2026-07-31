@@ -1,32 +1,64 @@
--- this version was from an old project, makes it easier to remember formatting.
+
 
 -- If tables exist, delete them
-DROP TABLE IF EXISTS `posts`;
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `purchases`;
+DROP TABLE IF EXISTS `products`;
+DROP TABLE IF EXISTS `customers`;
+DROP TABLE IF EXISTS `staff`;
 
--- Create users table
-CREATE TABLE users (
-    username VARCHAR(50) PRIMARY KEY,
+
+
+-- Create customers table
+CREATE TABLE customers (
+    CID INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    additionalemail VARCHAR(100),
-    phonenumber VARCHAR(20)
+    creditcardNum VARCHAR(30)
+);
+-- creditcardnum is varchar so that it can be stored with dashes; in practice an actual E-commerce site might want it to be numbers only.
+
+-- staff table
+CREATE TABLE staff (
+    SID INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT NULL
 );
 
--- Create posts table
-CREATE TABLE posts (
-    postID INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    content TEXT NOT NULL,
-    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    owner VARCHAR(50) NOT NULL,
-    FOREIGN KEY (owner) REFERENCES users(username)
+-- product table
+CREATE TABLE products (
+    PID INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    price DOUBLE NOT NULL,
+    stock INT NOT NULL
+);
+
+
+
+-- Create purchases table
+
+CREATE TABLE purchases (
+    purchaseNum INT AUTO_INCREMENT PRIMARY KEY,
+    quantityBought INT NOT NULL,
+    totalPrice DOUBLE NOT NULL,
+    purchaseDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CID INT NOT NULL,
+    FOREIGN KEY (CID) REFERENCES customers(CID)
+        ON DELETE CASCADE,
+    PID INT NOT NULL,
+    FOREIGN KEY (PID) REFERENCES products(PID)
         ON DELETE CASCADE
 );
 
 -- Add test data
-INSERT INTO users (username, password, name)
-VALUES ('waphteam12', MD5('team12'), 'Test User');
+INSERT INTO customers (name, password, creditcardNum)
+VALUES ('Aidan', MD5('password1'), '1234-5678-9101-1121');
 
-INSERT INTO posts (title, content, owner)
-VALUES ('Test Post', 'This is a test message.', 'waphteam12');
+INSERT INTO staff (name, password)
+VALUES ('Admin', MD5('password2'));
+
+INSERT INTO products (name, type, price, stock)
+VALUES ('TShirt', 'apparel', 34.99, 10);
+
+INSERT INTO purchases ( quantityBought,totalPrice, CID,PID )
+VALUES (3,104.97, 1,1);
