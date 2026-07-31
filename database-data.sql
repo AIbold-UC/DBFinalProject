@@ -58,7 +58,18 @@ INSERT INTO staff (name, password)
 VALUES ('Admin', MD5('password2'));
 
 INSERT INTO products (name, type, price, stock)
-VALUES ('TShirt', 'apparel', 34.99, 10);
+VALUES ('TShirt', 'apparel', 34.99, 20);
+INSERT INTO products (name, type, price, stock)
+VALUES ('Hat', 'apparel', 12.99, 12);
+INSERT INTO products (name, type, price, stock)
+VALUES ('Rolex watch', 'apparel',154.99,2);
+INSERT INTO products (name, type, price, stock)
+VALUES ('Soccer Ball', 'Sports',23.99,6);
+
 
 INSERT INTO purchases ( quantityBought,totalPrice, CID,PID )
 VALUES (3,104.97, 1,1);
+INSERT INTO purchases ( quantityBought,totalPrice, CID,PID )
+VALUES (10,129.90, 1,2);
+
+

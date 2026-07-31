@@ -93,7 +93,7 @@
 		while($stmt->fetch()){
 			echo "| Name: ".htmlentities($name) . "  | number sold: "
 				. htmlentities($quantitySold) . "  | Total value sold: "
-				. htmlentities($totalPrice) . "  |  " ;
+				. htmlentities($totalPrice) . "  |  <br>" ;
 
 		}
 
